@@ -23,18 +23,18 @@ def get_dataset(opt):
     print("Loading dataset %s ..." % opt.dataset)
     if opt.dataset == "mp3d":
         opt.train_data_path = (
-            "/private/home/ow045820/projects/habitat/"
+            "/home/lukas/Desktop/git/"
             + "habitat-api/data/datasets/pointnav/mp3d/v1/train/train.json.gz"
         )
         opt.val_data_path = (
-            "/private/home/ow045820/projects/habitat/"
+            "/home/lukas/Desktop/git/"
             + "habitat-api/data/datasets/pointnav/mp3d/v1/test/test.json.gz"
         )
         opt.test_data_path = (
-            "/private/home/ow045820/projects/habitat/"
+            "/home/lukas/Desktop/git/"
             + "habitat-api/data/datasets/pointnav/mp3d/v1/val/val.json.gz"
         )
-        opt.scenes_dir = "/checkpoint/ow045820/data/" # this should store mp3d
+        opt.scenes_dir = "/home/lukas/git/habitat-api/data/scene_datasets" # this should store mp3d
     elif opt.dataset == "habitat":
         opt.train_data_path = (
             "/private/home/ow045820/projects/habitat/habitat-api/"

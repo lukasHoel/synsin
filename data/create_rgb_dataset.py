@@ -65,7 +65,10 @@ def make_config(
     config.TASK.NAME = "Nav-v0"
     config.TASK.MEASUREMENTS = []
     config.DATASET.SPLIT = split
-    config.DATASET.POINTNAVV1.DATA_PATH = data_path
+
+    #config.DATASET.POINTNAVV1.DATA_PATH = data_path
+    config.DATASET.DATA_PATH = data_path
+
     config.DATASET.SCENES_DIR = scenes_dir
     config.HEIGHT = resolution
     config.WIDTH = resolution
@@ -89,7 +92,8 @@ def make_config(
 
 class RandomImageGenerator(object):
     def __init__(self, split, gpu_id, opts, vectorize=False, seed=0) -> None:
-        self.vectorize = vectorize
+        #self.vectorize = vectorize
+        self.vectorize = False
 
         print("gpu_id", gpu_id)
         resolution = opts.W
@@ -107,7 +111,8 @@ class RandomImageGenerator(object):
             raise Exception("Invalid split")
         unique_dataset_name = opts.dataset
 
-        self.num_parallel_envs = 5
+        #self.num_parallel_envs = 2
+        self.num_parallel_envs = 1
 
         self.images_before_reset = opts.images_before_reset
         config = make_config(
@@ -330,11 +335,13 @@ class RandomImageGenerator(object):
         if self.num_samples % self.images_before_reset == 0:
             old_env = self.env._current_episode_index
             self.env.reset()
+            '''
             print(
                 "RESETTING %d to %d \n"
                 % (old_env, self.env._current_episode_index),
                 flush=True,
             )
+            '''
 
         depths = []
         rgbs = []
@@ -421,6 +428,14 @@ class RandomImageGenerator(object):
                 "cameras": cameras,
                 "semantics": semantics,
             }
+
+        i = 0
+        for img in rgbs:
+            print("\n\n IMAGE \n\n {} \n\n".format(img.shape))
+            print(img.cpu().numpy().shape)
+            from torchvision.utils import save_image
+            save_image(img, '/home/lukas/Desktop/img' + str(i) + '.png')
+            i += 1
 
         return {"images": rgbs, "depths": depths, "cameras": cameras}
 

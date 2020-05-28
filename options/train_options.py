@@ -153,7 +153,7 @@ class ArgumentParser:
         dataset_params.add_argument(
             "--config",
             type=str,
-            default="/private/home/ow045820/projects/habitat/habitat-api/configs/tasks/pointnav_rgbd.yaml",
+            default="/home/lukas/Desktop/git/habitat-api/configs/tasks/pointnav_rgbd.yaml",
         )
         dataset_params.add_argument(
             "--current_episode_train", type=int, default=-1
@@ -161,7 +161,7 @@ class ArgumentParser:
         dataset_params.add_argument(
             "--current_episode_val", type=int, default=-1
         )
-        dataset_params.add_argument("--min_z", type=float, default=0.5)
+        dataset_params.add_argument("--min_z", type=float, default=0.1)
         dataset_params.add_argument("--max_z", type=float, default=10.0)
         dataset_params.add_argument("--W", type=int, default=256)
         dataset_params.add_argument(
@@ -276,7 +276,7 @@ class ArgumentParser:
         training.add_argument(
             "--log-dir",
             type=str,
-            default="/checkpoint/ow045820/logging/viewsynthesis3d/%s/",
+            default="/home/lukas/Desktop/git/synsin/modelcheckpoints/%s/",
         )
 
         training.add_argument("--batch-size", type=int, default=16)
@@ -378,6 +378,7 @@ def get_model_path(timestamp, opts):
         opts.suffix,
         opts.discriminator_losses,
     )
+    print(model_path)
     if not os.path.exists(model_path):
         os.makedirs(model_path)
 
