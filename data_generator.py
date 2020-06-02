@@ -27,10 +27,31 @@ def split_RT(RT):
     cam_pos = RT[0:3, 3].ravel()
     cam_up = R[:, 1].ravel()  # y=cam_up (already unit)
     cam_dir = R[:, 2].ravel() # z=cam_dir (already unit)
-    cam_pos = np.array2string(cam_pos, formatter=formatter, max_line_width=np.inf, separator=", ")
-    cam_up = np.array2string(cam_up, formatter=formatter, max_line_width=np.inf, separator=", ")
-    cam_dir = np.array2string(cam_dir, formatter=formatter, max_line_width=np.inf, separator=", ")
-    return cam_pos, cam_up, cam_dir
+    cam_pos_str = np.array2string(cam_pos, formatter=formatter, max_line_width=np.inf, separator=", ")
+    cam_up_str = np.array2string(cam_up, formatter=formatter, max_line_width=np.inf, separator=", ")
+    cam_dir_str = np.array2string(cam_dir, formatter=formatter, max_line_width=np.inf, separator=", ")
+
+    # CHECK if RT gets constructed correctly again out of cam_pos, cam_up and cam_dir
+    '''
+    print(RT)
+    print(cam_pos)
+    print(cam_up)
+    print(cam_dir)
+
+    z = cam_dir / np.linalg.norm(cam_dir)
+    x = np.cross(cam_up, z)
+    x = x / np.linalg.norm(x)
+    y = np.cross(z, x)
+
+    RT_new = np.column_stack((x, y, z, cam_pos))
+    RT_new = np.vstack([RT, [0, 0, 0, 1]])  # if (0 0 0 1) row is needed
+
+    print(RT_new)
+
+    print(np.allclose(RT, RT_new))
+    '''
+
+    return cam_pos_str, cam_up_str, cam_dir_str
 
 def save_data(batch, folder, epoch): # TODO: extend it to n views, n is default 2, focusing on image pairs for now.
     
